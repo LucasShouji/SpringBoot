@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 import com.unifil.trabalhoSpring.repository.ClienteRepository;
 import com.unifil.trabalhoSpring.repository.entity.Cliente;
 
+import jakarta.persistence.EntityNotFoundException;
+
 @Service
 public class ClienteService {
     
@@ -38,20 +40,28 @@ public class ClienteService {
         return repository.findAll();
     }
 
-    public Cliente atualizarCliente(String cpf, Cliente cliente2) throws Exception{
-        
-        Cliente cliente = repository.findByCpf(cpf);
+    public Cliente atualizarCliente(String cpf, Cliente cliente2) {
+    Cliente cliente = repository.findByCpf(cpf);
 
-        if (cliente == null) {
-        throw new Exception("Cliente não encontrado!");
+    if (cliente == null) {
+        throw new EntityNotFoundException("Cliente não encontrado!");
     }
-                
-        // Atualiza apenas os campos desejados
-            cliente.setNome(cliente2.getNome());
-            cliente.setEmail(cliente2.getEmail());
-            cliente.setSenha(cliente2.getSenha());
 
-            return repository.save(cliente);
+    // Atualiza apenas os campos desejados
+    cliente.setNome(cliente2.getNome());
+    cliente.setEmail(cliente2.getEmail());
+    cliente.setSenha(cliente2.getSenha());
+
+    return repository.save(cliente);
+    }
+    
+    public String apagarCliente(Long id) {
+        try {
+                repository.deleteById(id);
+                return "Cliente eliminado com sucesso! rsts";
+            }  catch (Exception e) {
+                return "Não foi possivel eliminar o cliente";
+            }
         }
     }
 
