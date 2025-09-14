@@ -53,10 +53,14 @@ public class ClienteController {
 
     //Rota para deletar um cliente via cpf
     @DeleteMapping("apagarCliente/{cpf}")
-    public String apagarUSuario(@PathVariable Long cpf) {
+    public String apagarUSuario(@PathVariable String cpf) {
        return service.apagarCliente(cpf);
     }
 }
+
+    
+
+
 
     
 
