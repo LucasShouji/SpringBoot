@@ -55,9 +55,9 @@ public class ClienteService {
     return repository.save(cliente);
     }
     
-    public String apagarCliente(Long id) {
+    public String apagarCliente(String cpf) {
         try {
-                repository.deleteById(id);
+                repository.deleteByCpf(cpf);
                 return "Cliente eliminado com sucesso! rsts";
             }  catch (Exception e) {
                 return "Não foi possivel eliminar o cliente";
